@@ -71,7 +71,7 @@ app.use(
 
 app.get("/", (req, res)=>{
 
-    res.send("Server Running")
+    res.send("Server Running smoothly")
 })
 
 app.use('/api/secure', require('./server/routes/user.routes'))
