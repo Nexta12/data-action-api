@@ -51,6 +51,7 @@ module.exports = {
     }
   },
   login: async (req, res, next) => {
+
     let { email, password } = req.body;
     email = email.trim();
     if (email == "" && password == "") {
@@ -87,5 +88,33 @@ module.exports = {
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
+  },
+  validateAuth: async (req, res) => {
+    try {
+
+      const currentUser = req.user
+
+      const userDetails = {
+        id: currentUser._id,
+        role: currentUser.role,
+        email: currentUser.email,
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+      }
+      res
+        .status(200).json({data: userDetails})
+    } catch (error) {
+      res.status(500).send('Internal Server Error')
+    }
+  },
+   // Logout function Handler
+   logout: async (req, res, next) => {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      req.session.destroy(); // Clean up the session from Database
+      res.status(200).json({ msg: "Logged Out" });
+    });
   },
 };

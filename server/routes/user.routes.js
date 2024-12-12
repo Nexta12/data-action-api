@@ -1,10 +1,9 @@
 const router = require('express').Router()
-const authController = require('../controllers/authController');
-const { emailToLowerCase } = require('../middlewares/authorization');
+const userController = require('../controllers/userController')
+
 // Add a User/Register a new User
 
-router.post("/addUser", emailToLowerCase, authController.addUser);
-router.post("/login", emailToLowerCase, authController.login);
+router.get("/test", userController.createSuperAdmin); 
 
 
 module.exports = router
