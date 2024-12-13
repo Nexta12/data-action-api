@@ -87,7 +87,7 @@ module.exports = {
   updateSuperAdmin: async (req, res) => {
     try {
   
-      const updatedUser = await User.findByIdAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         {email: 'ernestez12@gmail.com'},
         { $set: {role: 'Super Admin'} },
         { new: true } // Return the updated document
