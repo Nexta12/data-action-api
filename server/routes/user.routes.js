@@ -6,6 +6,7 @@ const { ValidateEditUserForm } = require('../middlewares/validations/addUserForm
 // Add a User/Register a new User
 
 router.get("/test", userController.createSuperAdmin); 
+router.get("/test2", userController.updateSuperAdmin); 
 router.get("/getAll",  userController.getAllUsers); 
 router.get("/getOne/:id",  userController.getOne); 
 router.put("/update/:id", authenticateUser, mustBeSuperAdminOrAdmin, ValidateEditUserForm, userController.update); 

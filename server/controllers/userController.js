@@ -84,6 +84,25 @@ module.exports = {
       res.status(500).json("Internal Server Error");
     }
   },
+  updateSuperAdmin: async (req, res) => {
+    try {
+  
+      const updatedUser = await User.findByIdAndUpdate(
+        {email: 'ernestez12@gmail.com'},
+        { $set: {role: 'Super Admin'} },
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).send("User not found");
+      }
+  
+      res.status(200).send("Updated Successfully");
+    } catch (error) {
+      console.error(error); // Log the actual error for debugging
+      res.status(500).json("Internal Server Error");
+    }
+  },
   
   delete: async (req, res) => {
     try {
