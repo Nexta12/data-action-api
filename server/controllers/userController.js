@@ -33,7 +33,7 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const users = await User.find();
+      const users = await User.find({ email: { $ne: process.env.SUPER_EMAIL } });
 
       res.status(200).send(users);
     } catch (error) {
@@ -50,16 +50,41 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-
-      console.log(req.body)
-
-
-      // await User.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
-      // res.status(200).send('Updated Successfully');
+      const updateData = { ...req.body };
+  
+      // Hash the password if provided
+      if (req.body.password && req.body.password.trim() !== "") {
+        const salt = await bcrypt.genSalt(10);
+        updateData.password = await bcrypt.hash(req.body.password, salt);
+      } else {
+        // Remove the password field to prevent overwriting it with an empty value
+        delete updateData.password;
+      }
+  
+      // Whitelist fields to update
+      const allowedUpdates = ["firstName", "email", "lastName", "password", "role"];
+      const updates = {};
+      for (const key of allowedUpdates) {
+        if (key in updateData) updates[key] = updateData[key];
+      }
+  
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: updates },
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).send("User not found");
+      }
+  
+      res.status(200).send("Updated Successfully");
     } catch (error) {
+      console.error(error); // Log the actual error for debugging
       res.status(500).json("Internal Server Error");
     }
   },
+  
   delete: async (req, res) => {
     try {
      await User.findByIdAndDelete(req.params.id);

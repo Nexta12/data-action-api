@@ -6,7 +6,6 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: ['Course', 'Service'],
-    lowercase: true,
   },
 
 },{timestamps: true})

@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     profilPic: String,
     email: String,
     password: String,
-    role: { type: String, default: "User" },
+    role: { type: String, enum: ['Super Admin', 'Admin', 'Staff', 'Editor', 'Accounts'], default: "Staff" },
   },
   { timestamps: true }
 );

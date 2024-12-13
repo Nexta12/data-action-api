@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
   addUser: async (req, res) => {
-    const { email, firstName, lastName, password } = req.body;
+    const { email, firstName, lastName, password, role } = req.body;
 
     try {
       // Validate email
@@ -40,6 +40,7 @@ module.exports = {
         firstName,
         lastName,
         password: hashedPassword,
+        role
       });
 
       // Send success response
@@ -55,7 +56,7 @@ module.exports = {
     let { email, password } = req.body;
     email = email.trim();
     if (email == "" && password == "") {
-      return res.status(401).json({ err: "Provide Login Details" });
+      return res.status(401).json("Provide Login Details" );
     }
 
     try {
@@ -66,7 +67,7 @@ module.exports = {
         if (!user) {
           return res
             .status(404)
-            .send({ message: info.message });
+            .send(info.message);
         }
 
         req.logIn(user, async (err) => {
@@ -86,7 +87,7 @@ module.exports = {
         });
       })(req, res, next);
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      res.status(500).json(err.message );
     }
   },
   validateAuth: async (req, res) => {

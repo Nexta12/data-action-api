@@ -6,21 +6,33 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     } else {
-      return res.status(403).json({ message: "You are not Logged In" });
+      return res.status(403).json("You are not Logged In" );
     }
   },
 
 
-  mustBeAdmin: (req, res, next) => {
-    if (req.user.role === "Admin") {
+  mustBeSuperAdmin: (req, res, next) => {
+    if (req.user.role === "Super Admin") {
       next();
     } else {
       return res
         .status(401)
-        .json({ err: "You don't have sufficient access to the resources" });
+        .json("You don't have sufficient access to perform the task");
     }
   },
+  mustBeSuperAdminOrAdmin: (req, res, next) => {
 
+   if(req.params.id && req.params.id === req.user.id){
+    next()
+   }else
+    if (req.user.role === "Super Admin" || req.user.role === "Admin" ) {
+      next();
+    } else {
+      return res
+        .status(401)
+        .json("You don't have sufficient access to perform the task");
+    }
+  },
 
   generateAccessToken: (user, jwt) => {
     return jwt.sign(

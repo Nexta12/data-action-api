@@ -6,8 +6,8 @@ const {
 
 router.post("/create", ValidateProductForm, productController.createProduct);
 router.get("/all", productController.allProducts);
-router.get("/:id", productController.getOneById);
-router.delete("/update/:id", productController.update);
+router.get("/getOne/:id", productController.getOneById);
+router.put("/update/:id", productController.update);
 router.delete("/delete/:id", productController.delete);
 
 module.exports = router;

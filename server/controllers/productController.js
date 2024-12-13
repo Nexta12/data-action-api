@@ -5,11 +5,12 @@ module.exports = {
       const product = await Product.create(req.body);
       res.status(201).json(product);
     } catch (error) {
+      console.log(error)
       res.status(500).send("Internal Server Error");
     }
   },
 
-  allProducts: async (res) => {
+  allProducts: async (req, res) => {
     try {
       const products = await Product.find().sort({
         createdAt: "desc",
