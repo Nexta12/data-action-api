@@ -3,7 +3,7 @@ module.exports = {
       try {
 
     
-        const { title, price } = req.body;
+        const { title, price, category } = req.body;
   
         if (!title || title === "") {
           return res.status(422).send("Please provide your title");
@@ -11,6 +11,9 @@ module.exports = {
   
         if (!price || price === "") {
           return res.status(422).send("Please provide your price");
+        }
+        if (!category || category === "") {
+          return res.status(422).send("Please provide your category");
         }
 
     
