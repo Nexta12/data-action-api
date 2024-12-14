@@ -1,22 +1,21 @@
-const Product = require("../models/Products");
+const Service = require("../models/Services");
 module.exports = {
-  createProduct: async (req, res) => {
+  createService: async (req, res) => {
     try {
-      const product = await Product.create(req.body);
-      res.status(201).json(product);
+      const service = await Service.create(req.body);
+      res.status(201).json(service);
     } catch (error) {
-      console.log(error)
       res.status(500).send("Internal Server Error");
     }
   },
 
-  allProducts: async (req, res) => {
+  allServices: async (req, res) => {
     try {
-      const products = await Product.find().sort({
+      const services = await Service.find().sort({
         createdAt: "desc",
       });
 
-      res.status(200).json(products);
+      res.status(200).json(services);
     } catch (error) {
       res.status(500).json("Internal server error");
     }
@@ -24,9 +23,9 @@ module.exports = {
   getOneById: async (req, res) => {
     const { id } = req.params;
     try {
-      const products = await Product.findById(id);
+      const services = await Service.findById(id);
 
-      res.status(200).json(products);
+      res.status(200).json(services);
     } catch (error) {
       res.status(500).json("Internal server error");
     }
@@ -34,7 +33,7 @@ module.exports = {
   update: async (req, res) =>{
     const { id } = req.params;
     try {
-      await Product.findByIdAndUpdate(id, {$set: req.body},{new: true});
+      await Service.findByIdAndUpdate(id, {$set: req.body},{new: true});
 
       res.status(200).json("Updated Successfully");
     } catch (error) {
@@ -45,7 +44,7 @@ module.exports = {
   delete: async (req, res) => {
     const { id } = req.params;
     try {
-      await Product.findByIdAndDelete(id);
+      await Service.findByIdAndDelete(id);
 
       res.status(200).json("Deleted Successfully");
     } catch (error) {

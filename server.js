@@ -79,6 +79,6 @@ app.use('/api/user', require('./server/routes/user.routes'))
 app.use('/api/consultation', require("./server/routes/consultation.routes"))
 app.use('/api/training', require("./server/routes/training.routes"))
 app.use('/api/contact', require('./server/routes/contact.routes'))
-app.use('/api/product', require('./server/routes/product.routes'))
+app.use('/api/service', require('./server/routes/service.routes'))
 
 app.listen(PORT, ()=> console.log(`Server running on: http://localhost:${PORT}`))

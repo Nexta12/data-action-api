@@ -1,9 +1,9 @@
 module.exports = {
-    ValidateProductForm: async (req, res, next) => {
+    ValidateServiceForm: async (req, res, next) => {
       try {
 
     
-        const { title, price, category} = req.body;
+        const { title, price } = req.body;
   
         if (!title || title === "") {
           return res.status(422).send("Please provide your title");
@@ -13,10 +13,6 @@ module.exports = {
           return res.status(422).send("Please provide your price");
         }
 
-  
-        if (!category || category === "") {
-          return res.status(422).send("Your category cannot be empty ");
-        }
     
         next();
       } catch (error) {
