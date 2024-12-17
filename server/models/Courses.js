@@ -8,11 +8,12 @@ const courseSchema = new mongoose.Schema({
   courseOutline: [],
   totalModules: String,
   experienceLevel: String,
+  slug: String,
   snippet: String,
   duration: {type: String}, 
   totalEnrolled: {type: Number, default: 0 }, 
   description: String,
-  whatYoudLearn: [String],
+  whatYoudLearn: [],
   weeklyTimeRequirement: String
 
 },{timestamps: true})

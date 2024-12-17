@@ -1,3 +1,4 @@
+const slugify = require('slugify')
 exports.getSnippet = (text, wordLimit) => {
     if (!text) return '';
     const words = text.split(' ');
@@ -7,3 +8,25 @@ exports.getSnippet = (text, wordLimit) => {
     return words.slice(0, wordLimit).join(' ');
   };
   
+ 
+module.exports.generateSlug = async (title, Model) => {
+  try {
+    // Generate the initial slug
+    let slug = slugify(title.trim(), { lower: true });
+
+    // Check for existing documents with the same slug and generate a unique slug if necessary
+    let slugExists = await Model.findOne({ slug });
+
+    let uniqueIdentifier = 1;
+    while (slugExists) {
+      slug = `${slugify(title.trim(), { lower: true })}-${uniqueIdentifier}`;
+      slugExists = await Model.findOne({ slug });
+      uniqueIdentifier += 1;
+    }
+
+    return slug;
+  } catch (error) {
+    console.error("Error generating slug:", error);
+    throw new Error("Slug generation failed");
+  }
+};

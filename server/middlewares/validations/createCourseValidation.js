@@ -7,7 +7,8 @@ module.exports = {
         title,
         price,
         duration,
-        description
+        description,
+        whatYoudLearn
       } = req.body;
 
       if (!title || title === "") {
@@ -26,7 +27,11 @@ module.exports = {
         req.body.snippet = getSnippet(description, 10)
       }
 
-      next();
+      const parsedArray = JSON.parse(whatYoudLearn);
+
+      req.body.whatYoudLearn = parsedArray.map(item => ({point: item}))
+     
+       next();
     } catch (error) {
       res.statu(422).send(error.message);
     }

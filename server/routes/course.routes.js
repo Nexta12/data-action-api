@@ -5,12 +5,12 @@ const { ValidateCreateCourseForm } = require("../middlewares/validations/createC
 
 // Create Course
 router.post("/create", ValidateCreateCourseForm, cloudinaryUploader, courseController.createCourse);
-router.post("/download/:id",  courseController.downloadCourseOutline);
+router.get("/download/:id",  courseController.downloadCourseOutline);
 
 // Get All Coursse.
 router.get("/getAll", courseController.getAllCourses);
 // Get One Course
-router.get("/:id", courseController.getOneCourse);
+router.get("/:slug", courseController.getOneCourse);
 // Edit Course
 router.put("/edit/:id", courseController.editCourse);
 // Delete Course
