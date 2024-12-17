@@ -9,6 +9,8 @@ const session = require("express-session");
 const { initialize } = require('./utils/passport');
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
+const fileUpload = require("express-fileupload");
+const path = require('path')
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -45,6 +47,19 @@ app.use(
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json())
 
+
+    //  file upload Config
+    app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: path.join(__dirname, "tmp"),
+        createParentPath: true,
+        limits: {
+          fileSize: 6 * 1024 * 1024 * 8, // 6mb max
+        },
+      }),
+    );
+
   app.use(
     session({
       secret: process.env.SESSION_SECRETE,
@@ -80,5 +95,6 @@ app.use('/api/consultation', require("./server/routes/consultation.routes"))
 app.use('/api/training', require("./server/routes/training.routes"))
 app.use('/api/contact', require('./server/routes/contact.routes'))
 app.use('/api/service', require('./server/routes/service.routes'))
+app.use('/api/course', require('./server/routes/course.routes'))
 
 app.listen(PORT, ()=> console.log(`Server running on: http://localhost:${PORT}`))

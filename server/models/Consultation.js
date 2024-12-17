@@ -7,7 +7,7 @@ const consultationSchema = new mongoose.Schema({
   price: Number,
   paid: { type: Boolean, default: false},
   choiceDate: {type: Date }, 
-  comment: {type: String, required: true}, 
+  comment: String, 
 
 },{timestamps: true})
 
