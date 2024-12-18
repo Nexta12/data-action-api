@@ -96,5 +96,11 @@ app.use('/api/training', require("./server/routes/training.routes"))
 app.use('/api/contact', require('./server/routes/contact.routes'))
 app.use('/api/service', require('./server/routes/service.routes'))
 app.use('/api/course', require('./server/routes/course.routes'))
+app.use('/api/payment', require('./server/routes/payment'))
+
+app.use((req, res) => {
+  res.send("Page Not Found");
+});
+
 
 app.listen(PORT, ()=> console.log(`Server running on: http://localhost:${PORT}`))

@@ -6,6 +6,7 @@ const trainingSchema = new mongoose.Schema({
   phoneNumber: String ,
   trainingType: {type: String, required: true}, 
   choiceDate: {type: Date }, 
+  cost: {type: Number }, 
   comment: String, 
 
 },{timestamps: true})

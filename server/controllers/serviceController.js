@@ -20,28 +20,6 @@ module.exports = {
       res.status(500).json("Internal server error");
     }
   },
-  servicesOnly: async (req, res) => {
-    try {
-      const services = await Service.find({category: 'Service'}).sort({
-        createdAt: "desc",
-      });
-
-      res.status(200).json(services);
-    } catch (error) {
-      res.status(500).json("Internal server error");
-    }
-  },
-  coursesOnly: async (req, res) => {
-    try {
-      const services = await Service.find({category: 'Course'}).sort({
-        createdAt: "desc",
-      });
-
-      res.status(200).json(services);
-    } catch (error) {
-      res.status(500).json("Internal server error");
-    }
-  },
   getOneById: async (req, res) => {
     const { id } = req.params;
     try {

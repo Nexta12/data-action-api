@@ -30,3 +30,9 @@ module.exports.generateSlug = async (title, Model) => {
     throw new Error("Slug generation failed");
   }
 };
+
+// generate Invoice Number
+exports.generateInvoiceNumber = () => {
+  const invoiceNo = Math.floor(100000 + Math.random() * 9000);
+  return invoiceNo.toString();
+};
