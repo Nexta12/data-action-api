@@ -10,13 +10,14 @@ module.exports = {
       res.status(500).json("Internal server error");
     }
   },
-  allApplications: async (res) => {
+  allApplications: async (req, res) => {
     try {
+
       const application = await Training.find().sort({
         createdAt: "desc",
       });
 
-      res.status(200).json(application);
+     res.status(200).json(application);
     } catch (error) {
       res.status(500).json("Internal server error");
     }

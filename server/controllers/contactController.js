@@ -1,7 +1,9 @@
+const { getSnippet } = require("../../utils/helpers");
 const Contact = require("../models/Contacts");
 module.exports = {
   createMessage: async (req, res) => {
     try {
+       req.body.snippet = getSnippet(req.body.message, 6)
       const message = await Contact.create(req.body);
 
       res.status(201).json(message);
@@ -9,7 +11,7 @@ module.exports = {
       res.status(500).json("Internal server error");
     }
   },
-  allMessages: async (res) => {
+  allMessages: async (req, res) => {
     try {
       const messages = await Contact.find().sort({
         createdAt: "desc",

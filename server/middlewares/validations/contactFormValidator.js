@@ -26,7 +26,7 @@ module.exports = {
         if (!message || message === "") {
           return res.status(422).send("Your Message cannot be empty ");
         }
-    
+
         next();
       } catch (error) {
         res.statu(422).send(error.message);

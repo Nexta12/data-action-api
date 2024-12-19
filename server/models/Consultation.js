@@ -5,7 +5,7 @@ const consultationSchema = new mongoose.Schema({
   applicantEmail: {type: String, required: true}, 
   consultationType: {type: String, required: true}, 
   price: Number,
-  paid: { type: Boolean, default: false},
+  status: { type: Boolean, default: false},
   choiceDate: {type: Date }, 
   comment: String, 
 

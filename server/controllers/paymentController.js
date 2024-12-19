@@ -1,15 +1,21 @@
 const { generateInvoiceNumber } = require("../../utils/helpers");
 const Payment = require("../models/Payments");
 const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY)
+const Consultation = require("../models/Consultation")
 
 module.exports = {
   checkout: async (req, res) => {
-    const {applicantName, applicantEmail, paymentFor, amount } = req.body;
+    const {applicantName, applicantEmail, paymentFor, amount, paymentPurposeId } = req.body;
      
     const customer = await stripe.customers.create({
       name: applicantName,
       email: applicantEmail,
       description: paymentFor,
+      metadata: {
+        purposeId: paymentPurposeId,
+        amount
+      },
+      
     });
 
     try {
@@ -51,6 +57,7 @@ module.exports = {
       
       // Access expanded customer details directly
       const customer = session.customer;
+    
 
       const date = new Date(customer.created * 1000);
       const formattedDate = date.toISOString();
@@ -60,6 +67,7 @@ module.exports = {
          applicantName: customer.name,
          applicantEmail: customer.email,
          paymentFor: customer.description,
+         amount: customer.metadata.amount,
          createdAt: formattedDate,
          invoice: generateInvoiceNumber(),
          status: true
@@ -68,6 +76,9 @@ module.exports = {
        if(!existingId){
         await Payment.create(userDetails);
        }
+       // Update Consultation payment status
+
+       await Consultation.findByIdAndUpdate({_id: customer.metadata.purposeId}, {$set: {status: true}})
       res.status(201).json('Success')
 
      } catch (error) {
@@ -107,7 +118,7 @@ module.exports = {
       res.status(500).json("Internal server error");
      }
   },
-  allApplications: async (res) => {
+  allApplications: async (req, res) => {
     try {
       const application = await Payment.find().sort({
         createdAt: "desc",

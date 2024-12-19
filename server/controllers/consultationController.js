@@ -10,7 +10,7 @@ module.exports = {
       res.status(500).json("Internal server error");
     }
   },
-  allConsultation: async (res) => {
+  allConsultation: async (req, res) => {
     try {
       const consultation = await Consultation.find().sort({
         createdAt: "desc",
