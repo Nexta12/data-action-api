@@ -95,8 +95,10 @@ const emailHeader = (title) => {
         <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px; text-align: left;">
            You have made a successfull purchase of a product on our portal, the details are ass follows.
            <br>
-            Product Name: ${product.title}
-            Amount Paid:  £${product.cost}
+           <strong>Product Name: ${product.title}</strong> 
+             <br>
+           <strong> Amount Paid:  £${product.cost}</strong> 
+             <br>
        </p>
 
         <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px; text-align: left;">
