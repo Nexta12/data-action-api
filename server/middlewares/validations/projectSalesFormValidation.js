@@ -1,12 +1,12 @@
 const { formatDateToDDMMYY } = require("../../../utils/helpers");
 
 module.exports = {
-  ValidateTrainingForm: async (req, res, next) => {
+  ValidateProjectSalesForm: async (req, res, next) => {
     try {
       const validRegex = /^[A-Za-z -]+$/; // test name
       const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-      const { applicantName, applicantEmail, trainingType, choiceDate } =
+      const { applicantName, applicantEmail, projectIndustry } =
         req.body;
 
       if (!applicantName || applicantName === "") {
@@ -25,14 +25,10 @@ module.exports = {
         return res.status(422).send("Email is Invalid");
       }
 
-      if (!trainingType || trainingType === "") {
+      if (!projectIndustry  || projectIndustry  === "") {
         return res.status(422).send("Please provide consultation type ");
       }
-      if (!choiceDate || choiceDate === "") {
-        return res.status(422).send("Please choose a date ");
-      }
-      
-      req.body.choiceDate = formatDateToDDMMYY(choiceDate)
+    
       req.body.status = `Registration`
 
       next();

@@ -1,10 +1,13 @@
+const { generateSlug } = require("../../utils/helpers");
 const Project = require("../models/Projects");
 module.exports = {
   createProject: async (req, res) => {
     try {
+      req.body.slug = await generateSlug(req.body.title, Project);
       const project = await Project.create(req.body);
       res.status(201).json(project);
     } catch (error) {
+       console.log(error)
       res.status(500).send("Internal Server Error");
     }
   },
@@ -20,10 +23,10 @@ module.exports = {
       res.status(500).json("Internal server error");
     }
   },
-  getOneById: async (req, res) => {
-    const { id } = req.params;
+  getOneBySlug: async (req, res) => {
+    const { slug } = req.params;
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findOne({slug});
 
       res.status(200).json(project);
     } catch (error) {

@@ -36,3 +36,8 @@ exports.generateInvoiceNumber = () => {
   const invoiceNo = Math.floor(100000 + Math.random() * 9000);
   return invoiceNo.toString();
 };
+
+exports.formatDateToDDMMYY = (isoDate) => {
+  const [year, month, day] = isoDate.split('-');
+  return `${day}-${month}-${year.slice(-2)}`;
+};

@@ -68,7 +68,8 @@ const saveUncompressibleFiles = async (updatedFileName, uploadedFile) => {
 exports.cloudinaryUploader = async (req, res, next) => {
   try {
     if (req.files) {
-      const fileCategories = ["images", "courseOutline" ];
+      
+      const fileCategories = ["images", "courseOutline", "dataset" ];
 
       // Initialize arrays
       fileCategories.forEach((category) => {
@@ -77,7 +78,8 @@ exports.cloudinaryUploader = async (req, res, next) => {
 
       const allFiles = {
         images: req.files.images || [],
-        courseOutline: req.files.courseOutline || []
+        courseOutline: req.files.courseOutline || [],
+        dataset: req.files.dataset || []
       };
 
       const isOnline = await checkInternetConnection();

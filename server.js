@@ -98,6 +98,7 @@ app.use('/api/service', require('./server/routes/service.routes'))
 app.use('/api/course', require('./server/routes/course.routes'))
 app.use('/api/payment', require('./server/routes/payment'))
 app.use('/api/project', require('./server/routes/project.routes'))
+app.use('/api/projectSales', require('./server/routes/projectSales.routes'))
 
 app.use((req, res) => {
   res.send("Page Not Found");

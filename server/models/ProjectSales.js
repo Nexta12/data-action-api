@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 
-const trainingSchema = new mongoose.Schema({
+const projectSalesSchema = new mongoose.Schema({
   applicantName: {type: String, required: true}, 
   applicantEmail: {type: String, required: true}, 
   phoneNumber: String ,
-  trainingType: {type: String, required: true}, 
-  choiceDate: String, 
+  projectIndustry: {type: String, required: true}, 
+  projectName: {type: String, required: true}, 
+  soldProjectId: String,
   cost: {type: Number, default: 0 }, 
   status: String,
   comment: String, 
@@ -13,4 +14,4 @@ const trainingSchema = new mongoose.Schema({
 },{timestamps: true})
 
 
-module.exports = mongoose.model("Training", trainingSchema);
+module.exports = mongoose.model("ProjectSales", projectSalesSchema);

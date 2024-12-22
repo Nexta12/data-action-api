@@ -2,8 +2,7 @@ module.exports = {
     ValidateProjectForm: async (req, res, next) => {
       try {
 
-    
-        const { title, price, industry, difficultyLevel } = req.body;
+        const { title, price, industry, difficultyLevel, dataset } = req.body;
   
         if (!title || title === "") {
           return res.status(422).send("Please provide your title");

@@ -1,3 +1,4 @@
+const { TrainingRegisteration } = require('../../utils/emailCalls');
 const Training = require('../models/Training')
 
 module.exports = {
@@ -5,6 +6,12 @@ module.exports = {
     try {
       const application = await Training.create(req.body);
 
+      const user = {
+        name: application.applicantName,
+        email: application.applicantEmail,
+      }
+      // Send email to user as below
+      TrainingRegisteration(user)
       res.status(201).json(application);
     } catch (error) {
       res.status(500).json("Internal server error");
