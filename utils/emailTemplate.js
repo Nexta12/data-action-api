@@ -92,14 +92,14 @@ const emailHeader = (title) => {
            Dear ${user.name},
        </p>
 
-        <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px;">
+        <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px; text-align: left;">
            You have made a successfull purchase of a product on our portal, the details are ass follows.
            <br>
             Product Name: ${product.title}
             Amount Paid:  £${product.cost}
        </p>
 
-        <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px;">
+        <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px; text-align: left;">
            Please Use the link Below to download the purchased Items
            <br>
 
