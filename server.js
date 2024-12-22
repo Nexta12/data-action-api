@@ -86,7 +86,7 @@ app.use(
 
 app.get("/", (req, res)=>{
 
-    res.send("Server Running smoothly")
+    res.send("Server Running smoothly  on local")
 })
 
 app.use('/api/secure', require('./server/routes/auth.routes'))
