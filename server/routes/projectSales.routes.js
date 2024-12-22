@@ -8,5 +8,6 @@ router.get("/all", projectSalesController.allApplications);
 router.get("/getOne/:id", projectSalesController.getOneById);
 router.delete("/delete/:id", projectSalesController.delete);
 router.get("/download/:id",  projectSalesController.downloadDataSet);
+router.get("/downloadDocs/:id",  projectSalesController.downloadDataSetDocs);
 
 module.exports = router;

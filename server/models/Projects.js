@@ -7,6 +7,7 @@ const projectsSchema = new mongoose.Schema({
   difficultyLevel: {type: String, enum: ['Beginner', 'Intermediate', 'Advanced']},
   purpose: String,
   dataset: [],
+  datasetDocs: [],
   slug: String,
   keytext: String
 

@@ -95,5 +95,57 @@ module.exports = {
           console.error('Error:', error.message);
           res.status(500).json("Internal Server Error");
         }
+  },
+  downloadDataSetDocs: async(req, res)=>{
+      try {
+          const { id } = req.params;
+      
+          // Find course by ID
+          const course = await Project.findById(id);
+          if (!course) {
+            return res.status(404).json("Course not found");
+          }
+      
+          const datasetDocs = course.datasetDocs[0]?.url;
+          if (!datasetDocs) {
+            return res.status(404).json("Course outline not found");
+          }
+      
+          // Download the file from Cloudinary
+          const response = await axios({
+            method: 'GET',
+            url: datasetDocs,
+            responseType: 'stream',
+          });
+      
+          if (response.status !== 200) {
+            return res.status(response.status).json("Failed to download the file");
+          }
+      
+          const fileName = path.basename(datasetDocs ); // Extract file name
+          const contentLength = response.headers['content-length'];
+      
+          // Set headers for file download
+          res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+          res.setHeader('Content-Type', response.headers['content-type'] || 'application/octet-stream');
+          if (contentLength) {
+            res.setHeader('Content-Length', contentLength);
+          }
+      
+          // Pipe the response stream to the client
+          response.data.pipe(res);
+      
+          response.data.on('end', () => {
+            console.log('File download completed');
+          });
+      
+          response.data.on('error', (err) => {
+            console.error('An error occurred while downloading:', err.message);
+            res.status(500).json("An error occurred while downloading the file.");
+          });
+        } catch (error) {
+          console.error('Error:', error.message);
+          res.status(500).json("Internal Server Error");
+        }
   }
 };

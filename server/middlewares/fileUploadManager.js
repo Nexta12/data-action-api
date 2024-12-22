@@ -69,7 +69,7 @@ exports.cloudinaryUploader = async (req, res, next) => {
   try {
     if (req.files) {
       
-      const fileCategories = ["images", "courseOutline", "dataset" ];
+      const fileCategories = ["images", "courseOutline", "dataset", "datasetDocs" ];
 
       // Initialize arrays
       fileCategories.forEach((category) => {
@@ -79,7 +79,8 @@ exports.cloudinaryUploader = async (req, res, next) => {
       const allFiles = {
         images: req.files.images || [],
         courseOutline: req.files.courseOutline || [],
-        dataset: req.files.dataset || []
+        dataset: req.files.dataset || [],
+        datasetDocs: req.files.datasetDocs || []
       };
 
       const isOnline = await checkInternetConnection();
