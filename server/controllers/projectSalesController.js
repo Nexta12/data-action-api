@@ -132,7 +132,7 @@ module.exports = {
         return res.status(404).json("Course not found");
       }
   
-      const datasetDocsLinks = course.dataset.map(item => item.url);
+      const datasetDocsLinks = course.datasetDocs.map(item => item.url);
       if (!datasetDocsLinks || datasetDocsLinks.length === 0) {
         return res.status(404).json("Dataset not found");
       }
