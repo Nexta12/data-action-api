@@ -70,35 +70,43 @@ module.exports = {
       // Set headers for downloading a zip file
       res.setHeader('Content-Type', 'application/zip');
       res.setHeader('Content-Disposition', 'attachment; filename="dataset.zip"');
-      res.setHeader('Content-Encoding', 'gzip');
   
       // Pipe the archive to the response
       zip.pipe(res);
   
-      // Download each file from Cloudinary and append to the zip file
-      for (const url of datasetLinks) {
+      // Function to download a file from Cloudinary
+      const downloadFile = async (url) => {
         try {
-          // Download the file from Cloudinary
           const response = await axios({
             method: 'GET',
             url: url,
             responseType: 'stream',
+            timeout: 60000, // Timeout after 60 seconds
           });
   
           if (response.status !== 200) {
-            return res.status(response.status).json(`Failed to download file: ${url}`);
+            console.error(`Failed to download file: ${url}`);
+            return null; // Ignore this file and continue
           }
   
           const fileName = path.basename(url); // Extract file name from the URL
-  
-          // Append the downloaded file to the zip
-          zip.append(response.data, { name: fileName });
-  
+          return { fileName, data: response.data };
         } catch (error) {
           console.error(`Error downloading file from Cloudinary: ${error.message}`);
-          return res.status(500).json(`Error downloading file from Cloudinary: ${error.message}`);
+          return null; // Ignore this file and continue
         }
-      }
+      };
+  
+      // Download all files concurrently
+      const filePromises = datasetLinks.map(async (url) => {
+        const file = await downloadFile(url);
+        if (file) {
+          zip.append(file.data, { name: file.fileName });
+        }
+      });
+  
+      // Wait for all file downloads to complete
+      await Promise.all(filePromises);
   
       // Finalize the zip archive
       zip.finalize();
@@ -124,8 +132,8 @@ module.exports = {
         return res.status(404).json("Course not found");
       }
   
-      const datasetDocLinks = course.datasetDocs.map(item => item.url);
-      if (!datasetDocLinks || datasetDocLinks.length === 0) {
+      const datasetDocsLinks = course.dataset.map(item => item.url);
+      if (!datasetDocsLinks || datasetDocsLinks.length === 0) {
         return res.status(404).json("Dataset not found");
       }
   
@@ -137,35 +145,43 @@ module.exports = {
       // Set headers for downloading a zip file
       res.setHeader('Content-Type', 'application/zip');
       res.setHeader('Content-Disposition', 'attachment; filename="datasetDocs.zip"');
-      res.setHeader('Content-Encoding', 'gzip');
   
       // Pipe the archive to the response
       zip.pipe(res);
   
-      // Download each file from Cloudinary and append to the zip file
-      for (const url of datasetDocLinks) {
+      // Function to download a file from Cloudinary
+      const downloadFile = async (url) => {
         try {
-          // Download the file from Cloudinary
           const response = await axios({
             method: 'GET',
             url: url,
             responseType: 'stream',
+            timeout: 60000, // Timeout after 60 seconds
           });
   
           if (response.status !== 200) {
-            return res.status(response.status).json(`Failed to download file: ${url}`);
+            console.error(`Failed to download file: ${url}`);
+            return null; // Ignore this file and continue
           }
   
           const fileName = path.basename(url); // Extract file name from the URL
-  
-          // Append the downloaded file to the zip
-          zip.append(response.data, { name: fileName });
-  
+          return { fileName, data: response.data };
         } catch (error) {
           console.error(`Error downloading file from Cloudinary: ${error.message}`);
-          return res.status(500).json(`Error downloading file from Cloudinary: ${error.message}`);
+          return null; // Ignore this file and continue
         }
-      }
+      };
+  
+      // Download all files concurrently
+      const filePromises = datasetDocsLinks.map(async (url) => {
+        const file = await downloadFile(url);
+        if (file) {
+          zip.append(file.data, { name: file.fileName });
+        }
+      });
+  
+      // Wait for all file downloads to complete
+      await Promise.all(filePromises);
   
       // Finalize the zip archive
       zip.finalize();
