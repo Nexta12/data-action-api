@@ -106,7 +106,7 @@ const emailHeader = (title) => {
            <br>
 
        </p>
-           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
            <p
             style="background:#20104B;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 14px;display:inline-block;border-radius:50px; letter-spacing:1px;"><a href=${process.env.BASE_URL}/api/projectSales/download/${product.id} style="text-decoration: none; color: white;" > Download Dataset</a>
            </p>

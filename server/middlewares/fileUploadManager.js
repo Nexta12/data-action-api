@@ -111,6 +111,8 @@ exports.cloudinaryUploader = async (req, res, next) => {
             } else {
                 await Promise.all(
                     uploadedFiles.map(async (file) => {
+
+                     
                         const fileExtension = getFileExtension(file);
                         const originalFileName = getFileName(file);
                         const updatedFileName = renamedFileName(originalFileName, fileExtension);
@@ -123,7 +125,7 @@ exports.cloudinaryUploader = async (req, res, next) => {
                         } else {
                             throw new Error("File type not allowed");
                         }
-                        deleteFileFromTmpFolder(file.tempFilePath);
+                      
                     })
                 );
             }
