@@ -1,6 +1,7 @@
 module.exports = {
   ValidateConsulationForm: async (req, res, next) => {
     try {
+  
       const validRegex = /^[A-Za-z -]+$/; // test name
       const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 

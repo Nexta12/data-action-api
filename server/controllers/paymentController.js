@@ -105,7 +105,9 @@ module.exports = {
           title: userDetails.paymentFor,
           cost: userDetails.amount,
         };
-        ProjectSuccessEmail(user, product);
+         await ProjectSuccessEmail(user, product);
+
+      
 
         // Update Payment status
         await ProjectSales.findByIdAndUpdate(
@@ -122,7 +124,7 @@ module.exports = {
 
       if (consultationData !== null) {
         // Send Consultation Email
-        ConsultationBookingSuccess(user);
+        await ConsultationBookingSuccess(user);
         // Update consultation status
         await Consultation.findByIdAndUpdate(
           { _id: customer.metadata.purposeId },
@@ -136,7 +138,7 @@ module.exports = {
 
       if (trainingData !== null) {
         // send Training email
-        TrainingPaymentSuccess(user);
+        await TrainingPaymentSuccess(user);
         // Update trainig status
         await Training.findByIdAndUpdate(
           { _id: customer.metadata.purposeId },

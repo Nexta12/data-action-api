@@ -1,3 +1,4 @@
+const { ConsultationBookingSuccess } = require("../../utils/emailCalls");
 const Consultation = require("../models/Consultation");
 
 module.exports = {
@@ -5,8 +6,17 @@ module.exports = {
     try {
       const consultation = await Consultation.create(req.body);
 
+       const user = {
+        name: consultation.applicantName,
+        email: consultation.applicantEmail,
+       }
+
+      if(consultation.price === 0){
+        await ConsultationBookingSuccess(user);
+      }
       res.status(201).json(consultation);
     } catch (error) {
+    
       res.status(500).json("Internal server error");
     }
   },
